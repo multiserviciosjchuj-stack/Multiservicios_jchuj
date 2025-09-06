@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiservicios Jchuj</title>
+<meta name="description" content="Estructuras metálicas, plomería, instalaciones eléctricas, obra gris, mantenimiento general y armado estructural para edificios. 20 años de experiencia.">
+<link rel="icon" href="./assets/img/logo.jpeg">
+
+<style>
+  /* ========= Variables y base ========= */
+  :root{
+    --blue-900:#0f2a5a;
+    --blue-700:#1f4ea8;
+    --blue-600:#1b5fbf;
+    --blue-100:#e8f0fe;
+    --orange-500:#f97316;
+    --ink:#1f2937;
+    --muted:#556274;
+    --radius:14px;
+    --nav-h:64px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ font-family: system-ui, -apple-system, Roboto, Arial, sans-serif; color:var(--ink); background:#fff; line-height:1.6; }
+  .container{ max-width:1200px; margin:0 auto; padding:0 20px; }
+  a{ color:var(--blue-700); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  .btn{
+    display:inline-block; padding:12px 20px; border-radius:12px; font-weight:600; text-decoration:none;
+    border:2px solid var(--orange-500); color:#fff; background:var(--orange-500);
+  }
+  .btn--ghost{ color:var(--orange-500); background:transparent; }
+  .tag{ display:inline-block; font-size:.8rem; padding:6px 10px; border-radius:999px; background:var(--blue-100); color:var(--blue-700); }
+
+  /* ========= Navegación ========= */
+  nav.gs-topnav{
+    position:sticky; top:0; z-index:50; background:rgba(15,42,90,.92);
+    backdrop-filter: blur(10px); border-bottom:1px solid rgba(255,255,255,.12);
+  }
+  .topnav-inner{ height:var(--nav-h); display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:10px; color:#fff; font-weight:800; letter-spacing:.2px; text-decoration:none; }
+  .brand img{ width:28px; height:28px; object-fit:contain; border-radius:6px; }
+  .menu{ list-style:none; display:flex; gap:16px; }
+  .menu a{ color:#fff; opacity:.9; padding:8px 10px; border-radius:10px; }
+  .menu a:hover, .menu a.active{ opacity:1; background:rgba(255,255,255,.08); text-decoration:none; }
+  .nav-toggle{ display:none; color:#fff; background:transparent; border:1px solid rgba(255,255,255,.35); padding:8px 10px; border-radius:10px; }
+
+  @media (max-width:880px){
+    .nav-toggle{ display:block; }
+    .menu{
+      position:absolute; right:20px; top:calc(var(--nav-h) - 8px);
+      display:none; flex-direction:column; gap:10px; background:rgba(15,42,90,.98);
+      border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:12px;
+    }
+    .menu.open{ display:flex; }
+  }
+
+  /* ========= Hero con carrusel ========= */
+  header.hero{
+    position:relative; min-height:72vh; display:grid; place-items:center; color:#fff; text-align:center; overflow:hidden;
+  }
+  .hero-bg{ position:absolute; inset:0; z-index:0; }
+  .hero-bg img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .8s ease;
+  }
+  .hero-bg img.is-active{ opacity:1; }
+  .hero::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background: linear-gradient(135deg, rgba(15,42,90,.55), rgba(0,0,0,.35));
+  }
+  .hero .content{ position:relative; z-index:2; padding:40px 20px; }
+  .hero h1{ font-weight:300; letter-spacing:2px; text-transform:uppercase; font-size:2.6rem; }
+  .hero p{ margin-top:10px; opacity:.95; }
+  .carousel-controls{
+    position:absolute; inset:auto 0 18px 0; z-index:3; display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.45); border:1px solid rgba(255,255,255,.7); }
+  .dot.is-active{ background:var(--orange-500); }
+
+  .arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    z-index:3; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.35);
+    color:#fff; padding:10px 12px; border-radius:999px; cursor:pointer; user-select:none;
+  }
+  .arrow:hover{ background:rgba(0,0,0,.5); }
+  .arrow.prev{ left:14px; } .arrow.next{ right:14px; }
+
+  /* ========= Secciones ========= */
+  section{ padding:70px 20px; }
+  h2.section-title{
+    text-align:center; color:var(--blue-900); font-weight:300; font-size:2.1rem; letter-spacing:.5px; margin-bottom:38px; position:relative;
+  }
+  h2.section-title::after{
+    content:""; width:70px; height:3px; background:linear-gradient(90deg, var(--orange-500), var(--blue-600));
+    position:absolute; left:50%; bottom:-14px; transform:translateX(-50%); border-radius:6px;
+  }
+
+  /* Sobre */
+  .about{ background:#f8fafc; }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:32px; max-width:1000px; margin:0 auto; }
+  .about p{ color:var(--muted); }
+  .kpi{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
+  .kpi .card{ background:#fff; border:1px solid #e5eef9; padding:16px; border-radius:var(--radius); text-align:center; }
+  .kpi .card b{ font-size:1.8rem; color:var(--blue-700); }
+
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } .kpi{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+
+  /* Servicios */
+  .services{ max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px; }
+  .svc{ border:1px solid #e5eef9; border-radius:var(--radius); padding:18px; background:#fff; box-shadow:0 2px 10px rgba(20,61,121,.05); }
+  .svc h3{ color:var(--blue-900); font-size:1.05rem; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+  .svc h3::before{ content:""; width:10px; height:10px; border-radius:3px; background:var(--orange-500); display:inline-block; }
+
+  /* Galería */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px; max-width:1100px; margin:0 auto; }
+  .card{ border:1px solid #e5eef9; border-radius:var(--radius); overflow:hidden; background:#fff; }
+  .card img{ width:100%; height:220px; object-fit:cover; display:block; }
+  .card .p{ padding:12px 14px; color:var(--muted); font-size:.95rem; }
+
+  /* Contacto y footer */
+  .contact{ background:linear-gradient(180deg, #f9fbff, #ffffff); }
+  .contact-cta{ text-align:center; margin-top:20px; }
+  footer{ margin-top:0; padding:36px 20px; background:var(--blue-900); color:#dbe6ff; text-align:center; }
+  footer a{ color:#fff; text-decoration:underline; }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-bg img{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= Navegación ======= -->
+<nav class="gs-topnav" role="navigation" aria-label="Menú principal">
+  <div class="topnav-inner container">
+    <a class="brand" href="#inicio">
+      <img src="./assets/img/logo.jpeg" alt="" onerror="this.style.display='none'">
+      Multiservicios Jchuj
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">☰</button>
+    <ul id="primary-menu" class="menu">
+      <li><a href="#inicio" class="active">Inicio</a></li>
+      <li><a href="#quienes">Quiénes Somos</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ======= Hero con carrusel ======= -->
+<header id="inicio" class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <!-- Las imágenes se inyectan vía JS desde la lista "IMAGES" -->
+  </div>
+
+  <button class="arrow prev" aria-label="Anterior">‹</button>
+  <button class="arrow next" aria-label="Siguiente">›</button>
+  <div class="carousel-controls" aria-hidden="true"></div>
+
+  <div class="content container">
+    <span class="tag">20 años de experiencia</span>
+    <h1>Soluciones en construcción y mantenimiento</h1>
+    <p>Estructuras metálicas · Plomería · Instalaciones eléctricas · Obra gris · Mantenimiento general · Armado estructural</p>
+    <div style="margin-top:16px;">
+      <a class="btn" href="#contacto">Solicitar cotización</a>
+      <a class="btn btn--ghost" href="tel:+50230473824" style="margin-left:8px;">Llamar ahora</a>
+    </div>
+  </div>
+</header>
+
+<!-- ======= Quiénes somos / Misión / Visión ======= -->
+<section id="quienes" class="about">
+  <div class="container">
+    <h2 class="section-title">Quiénes Somos</h2>
+    <div class="about-grid">
+      <div>
+        <p>
+          En <strong>Multiservicios Jchuj</strong> diseñamos, construimos y mantenemos soluciones para el sector
+          residencial, comercial e industrial. Nuestro portafolio integra <em>estructuras metálicas, plomería,
+          instalaciones eléctricas, obra gris, mantenimiento general y armado estructural para edificios</em>.
+          Durante <strong>20 años</strong> hemos operado con estándares de seguridad, calidad y cumplimiento,
+          respaldados por mano de obra calificada.
+        </p>
+        <div class="kpi">
+          <div class="card"><b>20+</b><div>años en el mercado</div></div>
+          <div class="card"><b>1000+</b><div>proyectos ejecutados</div></div>
+          <div class="card"><b>24/7</b><div>respuesta a emergencias</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--blue-900); margin-bottom:8px;">Misión</h3>
+        <p class="mb">Proveer servicios integrales en estructuras metálicas, instalaciones y mantenimiento,
+          garantizando seguridad, calidad y continuidad operativa para nuestros clientes, mediante procesos
+          estandarizados, materiales certificados y un equipo técnico altamente capacitado.</p>
+
+        <h3 style="color:var(--blue-900); margin:18px 0 8px;">Visión</h3>
+        <p>Ser la empresa de referencia en soluciones constructivas y de mantenimiento en la región, reconocida
+          por su confiabilidad, innovación, cumplimiento y la excelencia de su talento humano.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Servicios ======= -->
+<section id="servicios">
+  <div class="container">
+    <h2 class="section-title">Servicios</h2>
+    <div class="services">
+      <article class="svc">
+        <h3>Estructuras Metálicas</h3>
+        <p>Diseño, fabricación y montaje de naves, cubiertas, mezzanines, barandales y soldadura especializada.</p>
+      </article>
+      <article class="svc">
+        <h3>Plomería</h3>
+        <p>Instalaciones hidráulicas y sanitarias, detección de fugas, bombas, calentadores y pruebas de presión.</p>
+      </article>
+      <article class="svc">
+        <h3>Instalaciones Eléctricas</h3>
+        <p>Residencial e industrial: tableros, canalizaciones, luminarias, puesta a tierra y normativas de seguridad.</p>
+      </article>
+      <article class="svc">
+        <h3>Obra Gris</h3>
+        <p>Construcción de muros, pisos, repellados, estructura ligera y acabados base para proyectos nuevos o remodelación.</p>
+      </article>
+      <article class="svc">
+        <h3>Mantenimiento General</h3>
+        <p>Programas preventivos y correctivos para instalaciones, equipos y edificaciones. Planes a medida.</p>
+      </article>
+      <article class="svc">
+        <h3>Armado Estructural para Edificios</h3>
+        <p>Prefabricado, izaje y montaje con control dimensional, logística y seguridad en sitio.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Galería ======= -->
+<section id="galeria">
+  <div class="container">
+    <h2 class="section-title">Galería de Trabajos</h2>
+    <div class="grid">
+      <!-- Puedes duplicar o eliminar tarjetas; son ejemplos con tus nombres de archivo -->
+      <article class="card">
+        <img src="./assets/img/trabajo1.jpeg" alt="Trabajo 1">
+        <div class="p">Trabajo 1</div>
+      </article>
+      <article class="card">
+        <img src="./assets/img/trabajo2.jpeg" alt="Trabajo 2">
+        <div class="p">Trabajo 2</div>
+      </article>
+      <article class="card">
+        <img src="./assets/img/trabajo3.jpeg" alt="Trabajo 3">
+        <div class="p">Trabajo 3</div>
+      </article>
+      <article class="card">
+        <img src="./assets/img/edificio1.jpeg" alt="Estructura en edificio 1">
+        <div class="p">Estructura en edificio 1</div>
+      </article>
+      <article class="card">
+        <img src="./assets/img/edificio2.jpeg" alt="Estructura en edificio 2">
+        <div class="p">Estructura en edificio 2</div>
+      </article>
+      <article class="card">
+        <img src="./assets/img/techo.jpeg" alt="Montaje de techo metálico">
+        <div class="p">Montaje de techo metálico</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Contacto ======= -->
+<section id="contacto" class="contact">
+  <div class="container">
+    <h2 class="section-title">Contacto</h2>
+    <p style="text-align:center; color:var(--muted); max-width:780px; margin:0 auto;">
+      ¿Listo para cotizar o agendar una visita técnica? Escríbenos y con gusto te atendemos.
+    </p>
+    <div class="contact-cta">
+      <p style="margin:16px 0;">
+        Tel: <a href="tel:+50230473824">+502 3047-3824</a> ·
+        Email: <a href="mailto:multiserviciosjchuj@gmail.com">multiserviciosjchuj@gmail.com</a>
+      </p>
+      <a class="btn" href="https://wa.me/50230473824" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Multiservicios Jchuj — Guatemala, Centroamérica ·
+  <a href="#inicio">Volver arriba</a>
+</footer>
+
+<!-- ========= Scripts ========= -->
+<script>
+/* ===== Menú móvil + enlace activo ===== */
+(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('primary-menu');
+  const links = menu.querySelectorAll('a');
+
+  toggle.addEventListener('click', ()=>{
+    const open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.forEach(a => a.addEventListener('click', ()=>{
+    menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false');
+  }));
+
+  // Resaltar sección activa
+  const sections = document.querySelectorAll('header#inicio, section[id]');
+  const byHref = {}; links.forEach(a => { byHref[a.getAttribute('href')] = a; });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const id = entry.target.id ? `#${entry.target.id}` : '#inicio';
+      links.forEach(a => a.classList.remove('active'));
+      if(byHref[id]) byHref[id].classList.add('active');
+    });
+  }, { threshold: 0.55 });
+  sections.forEach(sec => io.observe(sec));
+})();
+
+/* ===== Carrusel local (usa tus archivos de assets/img) ===== */
+(function(){
+  const hero = document.querySelector('.hero-bg');
+  if(!hero) return;
+
+  // Lista con todas tus fotos subidas (puedes reordenar o quitar)
+  const IMAGES = [
+    "trabajo1.jpeg","trabajo2.jpeg","trabajo3.jpeg","trabajo4.jpeg",
+    "trabajo5.jpeg","trabajo6.jpeg","trabajo7.jpeg","trabajo8.jpeg",
+    "edificio1.jpeg","edificio2.jpeg","edificio3.jpeg","edificio4.jpeg","edificio5.jpeg","edificio6.jpeg",
+    "furgon1.jpeg","furgon2.jpeg","techo.jpeg",
+    "cabaña1.jpeg","cabaña2.jpeg" // nombres con ñ funcionan gracias a encodeURI
+  ];
+
+  // Construye las etiquetas <img> (codificando el nombre por si hay caracteres especiales)
+  hero.innerHTML = IMAGES.map((name, i)=>{
+    const src = "./assets/img/" + encodeURI(name);
+    return `<img src="${src}" alt="" ${i===0?'class="is-active"':''} decoding="async" ${i===0?'fetchpriority="high"':''}>`;
+  }).join("");
+
+  const imgs = Array.from(hero.querySelectorAll('img'));
+  const dotsWrap = document.querySelector('.carousel-controls');
+  dotsWrap.innerHTML = imgs.map((_,i)=>`<span class="dot ${i===0?'is-active':''}" data-i="${i}"></span>`).join("");
+  const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
+
+  let index = 0, total = imgs.length, ms = 5000, timer = null;
+  const show = (i) => {
+    imgs.forEach((el,k)=>el.classList.toggle('is-active', k===i));
+    dots.forEach((d,k)=>d.classList.toggle('is-active', k===i));
+  };
+  const next = () => { index = (index+1)%total; show(index); };
+  const prev = () => { index = (index-1+total)%total; show(index); };
+
+  // Controles
+  document.querySelector('.arrow.next').addEventListener('click', ()=>{ next(); restart(); });
+  document.querySelector('.arrow.prev').addEventListener('click', ()=>{ prev(); restart(); });
+  dots.forEach(d => d.addEventListener('click', (e)=>{ index = +e.target.dataset.i; show(index); restart(); }));
+
+  // Auto-rotación (respeta reduce-motion)
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function start(){ if(!reduce) timer = setInterval(next, ms); }
+  function stop(){ if(timer) clearInterval(timer); }
+  function restart(){ stop(); start(); }
+
+  hero.addEventListener('mouseenter', stop);
+  hero.addEventListener('mouseleave', start);
+  show(0); start();
+})();
+</script>
+</body>
+</html>
