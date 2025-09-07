@@ -15,11 +15,16 @@
   :root{
     --blue-900:#0f2a5a; --blue-700:#1f4ea8; --blue-600:#1b5fbf; --blue-100:#e8f0fe;
     --orange-500:#f97316; --ink:#1f2937; --muted:#556274;
-    --radius:14px; --nav-h:64px;
+    --radius:14px; --nav-h:64px; --safe-top: env(safe-area-inset-top, 0px);
   }
+
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{font-family:system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6;overflow-x:hidden}
+  /* Bloquea cualquier desbordamiento horizontal residual */
+  html, body{ overflow-x: hidden; }
+  img, svg, video, canvas{ max-width:100%; height:auto; display:block; }
+
+  body{font-family:system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
   .container{max-width:1200px;margin:0 auto;padding:0 20px}
   a{color:var(--blue-700);text-decoration:none} a:hover{text-decoration:underline}
   .btn{display:inline-block;padding:12px 20px;border-radius:12px;font-weight:600;border:2px solid var(--orange-500);color:#fff;background:var(--orange-500)}
@@ -101,14 +106,22 @@
 
   @media (prefers-reduced-motion:reduce){.hero-bg img{transition:none !important}}
 
-  /* ===== Pulido móvil: centrados y anclas con nav fijo ===== */
-  header#inicio, section[id]{ scroll-margin-top: calc(var(--nav-h) + 14px); }
+  /* ===== Anclas compensadas por el alto REAL del menú y el safe area ===== */
+  header#inicio, section[id]{
+    scroll-margin-top: calc(var(--nav-h) + var(--safe-top) + 20px);
+  }
+  @media (max-width:640px){
+    header#inicio, section[id]{
+      scroll-margin-top: calc(var(--nav-h) + var(--safe-top) + 32px);
+    }
+  }
 
+  /* ===== Centrados duros en móvil ===== */
   @media (max-width: 640px){
     .container { text-align: center; }
     .about-grid{ grid-template-columns:1fr !important; text-align:center; }
     .about-grid h3, .about-grid p{ text-align:center; }
-    .kpi{ gap:14px; }
+    .kpi{ gap:14px; justify-items:center; }
     .project-card .meta{ justify-content:center; gap:10px; }
     .project-card h3{ text-align:center; width:100%; }
     .contact .container{ text-align:center; }
@@ -242,6 +255,18 @@ function setSrcWithFallback(img, candidates){
   tryNext();
 }
 const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
+
+/* ===== Ajusta dinámicamente la variable --nav-h al alto real del menú ===== */
+(function(){
+  const nav = document.querySelector('.gs-topnav');
+  if(!nav) return;
+  function setNavHeight(){
+    const h = Math.ceil(nav.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--nav-h', h + 'px');
+  }
+  setNavHeight();
+  window.addEventListener('resize', setNavHeight);
+})();
 
 /* ========= Logo: busca varias rutas/variantes (sin onerror que lo oculte) ========= */
 (function(){
