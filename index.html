@@ -7,181 +7,103 @@
 <meta name="description" content="Estructuras metálicas, plomería, instalaciones eléctricas, obra gris, mantenimiento general y armado estructural para edificios. 20 años de experiencia.">
 <meta name="theme-color" content="#0f2a5a">
 <link rel="icon" href="./assets/img/logo.jpeg">
-
 <style>
-  /* ========= Variables y base ========= */
   :root{
-    --blue-900:#0f2a5a;
-    --blue-700:#1f4ea8;
-    --blue-600:#1b5fbf;
-    --blue-100:#e8f0fe;
-    --orange-500:#f97316;
-    --ink:#1f2937;
-    --muted:#556274;
-    --radius:14px;
-    --nav-h:64px;
+    --blue-900:#0f2a5a; --blue-700:#1f4ea8; --blue-600:#1b5fbf; --blue-100:#e8f0fe;
+    --orange-500:#f97316; --ink:#1f2937; --muted:#556274;
+    --radius:14px; --nav-h:64px;
   }
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; }
-  body{ font-family: system-ui, -apple-system, Roboto, Arial, sans-serif; color:var(--ink); background:#fff; line-height:1.6; }
-  .container{ max-width:1200px; margin:0 auto; padding:0 20px; }
-  a{ color:var(--blue-700); text-decoration:none; }
-  a:hover{ text-decoration:underline; }
-  .btn{
-    display:inline-block; padding:12px 20px; border-radius:12px; font-weight:600; text-decoration:none;
-    border:2px solid var(--orange-500); color:#fff; background:var(--orange-500);
-  }
-  .btn--ghost{ color:var(--orange-500); background:transparent; }
-  .tag{ display:inline-block; font-size:.8rem; padding:6px 10px; border-radius:999px; background:var(--blue-100); color:var(--blue-700); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font-family:system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6;overflow-x:hidden}
+  .container{max-width:1200px;margin:0 auto;padding:0 20px}
+  a{color:var(--blue-700);text-decoration:none} a:hover{text-decoration:underline}
+  .btn{display:inline-block;padding:12px 20px;border-radius:12px;font-weight:600;border:2px solid var(--orange-500);color:#fff;background:var(--orange-500)}
+  .btn--ghost{color:var(--orange-500);background:transparent}
+  .tag{display:inline-block;font-size:.8rem;padding:6px 10px;border-radius:999px;background:var(--blue-100);color:var(--blue-700)}
 
-  /* ========= Navegación ========= */
-  nav.gs-topnav{
-    position:sticky; top:0; z-index:50; background:rgba(15,42,90,.92);
-    backdrop-filter: blur(10px); border-bottom:1px solid rgba(255,255,255,.12);
-  }
-  .topnav-inner{ height:var(--nav-h); display:flex; align-items:center; justify-content:space-between; }
-  .brand{ display:flex; align-items:center; gap:10px; color:#fff; font-weight:800; letter-spacing:.2px; text-decoration:none; }
-  .brand img{ width:28px; height:28px; object-fit:contain; border-radius:6px; }
-  .menu{ list-style:none; display:flex; gap:16px; }
-  .menu a{ color:#fff; opacity:.9; padding:8px 10px; border-radius:10px; }
-  .menu a:hover, .menu a.active{ opacity:1; background:rgba(255,255,255,.08); text-decoration:none; }
-  .nav-toggle{ display:none; color:#fff; background:transparent; border:1px solid rgba(255,255,255,.35); padding:8px 10px; border-radius:10px; }
-
+  /* NAV */
+  nav.gs-topnav{position:sticky;top:0;z-index:50;background:rgba(15,42,90,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.12)}
+  .topnav-inner{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;letter-spacing:.2px;text-decoration:none}
+  .brand img{width:28px;height:28px;object-fit:contain;border-radius:6px}
+  .menu{list-style:none;display:flex;gap:16px}
+  .menu a{color:#fff;opacity:.9;padding:8px 10px;border-radius:10px}
+  .menu a:hover,.menu a.active{opacity:1;background:rgba(255,255,255,.08);text-decoration:none}
+  .nav-toggle{display:none;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);padding:8px 10px;border-radius:10px}
   @media (max-width:880px){
-    .nav-toggle{ display:block; }
-    .menu{
-      position:absolute; right:20px; top:calc(var(--nav-h) - 8px);
-      display:none; flex-direction:column; gap:10px; background:rgba(15,42,90,.98);
-      border:1px solid rgba(255,255,255,.15); border-radius:12px; padding:12px;
-    }
-    .menu.open{ display:flex; }
+    .nav-toggle{display:block}
+    .menu{position:absolute;right:20px;top:calc(var(--nav-h) - 8px);display:none;flex-direction:column;gap:10px;background:rgba(15,42,90,.98);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;left:20px;width:auto;max-width:calc(100% - 40px)}
+    .menu.open{display:flex}
   }
 
-  /* ========= Hero con carrusel ========= */
-  header.hero{
-    position:relative; min-height:72vh; display:grid; place-items:center; color:#fff; text-align:center; overflow:hidden;
-  }
-  .hero-bg{ position:absolute; inset:0; z-index:0; }
-  .hero-bg img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .8s ease;
-  }
-  .hero-bg img.is-active{ opacity:1; }
-  .hero::before{
-    content:""; position:absolute; inset:0; z-index:1;
-    background: linear-gradient(135deg, rgba(15,42,90,.55), rgba(0,0,0,.35));
-  }
-  .hero .content{ position:relative; z-index:2; padding:40px 20px; }
-  .hero h1{ font-weight:300; letter-spacing:2px; text-transform:uppercase; font-size:2.6rem; }
-  .hero p{ margin-top:10px; opacity:.95; }
-  .carousel-controls{
-    position:absolute; inset:auto 0 18px 0; z-index:3; display:flex; align-items:center; justify-content:center; gap:8px;
-  }
-  .dot{ width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.45); border:1px solid rgba(255,255,255,.7); }
-  .dot.is-active{ background:var(--orange-500); }
+  /* HERO + CARRUSEL */
+  header.hero{position:relative;min-height:72vh;display:grid;place-items:center;color:#fff;text-align:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
+  .hero-bg img.is-active{opacity:1}
+  .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(15,42,90,.55),rgba(0,0,0,.35))}
+  .hero .content{position:relative;z-index:2;padding:40px 20px}
+  .hero h1{font-weight:300;letter-spacing:2px;text-transform:uppercase;font-size:clamp(1.6rem,5.2vw,2.6rem)}
+  .hero p{margin-top:10px;opacity:.95;font-size:clamp(.95rem,3.6vw,1.1rem)}
+  .carousel-controls{position:absolute;inset:auto 0 18px 0;z-index:3;display:flex;align-items:center;justify-content:center;gap:8px}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.7)}
+  .dot.is-active{background:var(--orange-500)}
+  .arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.35);color:#fff;padding:10px 12px;border-radius:999px;cursor:pointer;user-select:none}
+  .arrow:hover{background:rgba(0,0,0,.5)} .arrow.prev{left:14px} .arrow.next{right:14px}
+  @media (max-width:720px){header.hero{min-height:64vh}.arrow{padding:8px 10px}.arrow.prev{left:8px}.arrow.next{right:8px}.carousel-controls{gap:6px}.dot{width:8px;height:8px}}
 
-  .arrow{
-    position:absolute; top:50%; transform:translateY(-50%);
-    z-index:3; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.35);
-    color:#fff; padding:10px 12px; border-radius:999px; cursor:pointer; user-select:none;
-  }
-  .arrow:hover{ background:rgba(0,0,0,.5); }
-  .arrow.prev{ left:14px; } .arrow.next{ right:14px; }
+  /* SECCIONES */
+  section{padding:clamp(48px,7vw,70px) 20px}
+  h2.section-title{text-align:center;color:var(--blue-900);font-weight:300;font-size:2.1rem;letter-spacing:.5px;margin-bottom:38px;position:relative}
+  h2.section-title::after{content:"";width:70px;height:3px;background:linear-gradient(90deg,var(--orange-500),var(--blue-600));position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);border-radius:6px}
 
-  /* ========= Secciones ========= */
-  section{ padding:70px 20px; }
-  h2.section-title{
-    text-align:center; color:var(--blue-900); font-weight:300; font-size:2.1rem; letter-spacing:.5px; margin-bottom:38px; position:relative;
-  }
-  h2.section-title::after{
-    content:""; width:70px; height:3px; background:linear-gradient(90deg, var(--orange-500), var(--blue-600));
-    position:absolute; left:50%; bottom:-14px; transform:translateX(-50%); border-radius:6px;
-  }
+  /* QUIÉNES SOMOS */
+  .about{background:#f8fafc}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1000px;margin:0 auto}
+  .about p{color:var(--muted)}
+  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  .kpi .card{background:#fff;border:1px solid #e5eef9;padding:16px;border-radius:var(--radius);text-align:center}
+  .kpi .card b{font-size:1.8rem;color:var(--blue-700)}
+  @media (max-width:860px){.about-grid{grid-template-columns:1fr}}
 
-  /* Sobre */
-  .about{ background:#f8fafc; }
-  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:32px; max-width:1000px; margin:0 auto; }
-  .about p{ color:var(--muted); }
-  .kpi{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
-  .kpi .card{ background:#fff; border:1px solid #e5eef9; padding:16px; border-radius:var(--radius); text-align:center; }
-  .kpi .card b{ font-size:1.8rem; color:var(--blue-700); }
+  /* SERVICIOS */
+  .services{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .svc{border:1px solid #e5eef9;border-radius:var(--radius);padding:18px;background:#fff;box-shadow:0 2px 10px rgba(20,61,121,.05)}
+  .svc h3{color:var(--blue-900);font-size:1.05rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .svc h3::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--orange-500);display:inline-block}
 
-  @media (max-width:860px){
-    .about-grid{ grid-template-columns:1fr; }
-    .kpi{ grid-template-columns:repeat(3, minmax(0,1fr)); }
-  }
+  /* PROYECTOS */
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:1100px;margin:0 auto}
+  .project-card{border:1px solid #e5eef9;border-radius:var(--radius);overflow:hidden;background:#fff;display:flex;flex-direction:column}
+  .project-card .cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+  .project-card .meta{padding:14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .project-card h3{margin:0;color:var(--blue-900);font-size:1.05rem}
+  .project-card .btn{padding:10px 14px;border-width:2px}
 
-  /* Servicios */
-  .services{ max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px; }
-  .svc{ border:1px solid #e5eef9; border-radius:var(--radius); padding:18px; background:#fff; box-shadow:0 2px 10px rgba(20,61,121,.05); }
-  .svc h3{ color:var(--blue-900); font-size:1.05rem; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
-  .svc h3::before{ content:""; width:10px; height:10px; border-radius:3px; background:var(--orange-500); display:inline-block; }
+  /* LIGHTBOX */
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:100}
+  .lightbox[aria-hidden="false"]{display:flex}
+  .lightbox img{max-width:92vw;max-height:82vh;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+  .lb-close,.lb-prev,.lb-next{position:absolute;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);padding:10px 12px;border-radius:999px;cursor:pointer;user-select:none}
+  .lb-close{top:18px;right:18px} .lb-prev{left:18px} .lb-next{right:18px}
+  .lb-caption{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#e5eef9;font-size:.95rem;padding:0 14px}
 
-  /* Galería */
-  .grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px; max-width:1100px; margin:0 auto; }
-  .card{ border:1px solid #e5eef9; border-radius:var(--radius); overflow:hidden; background:#fff; }
-  .card img{ width:100%; height:220px; object-fit:cover; display:block; } /* altura fija en desktop */
-  .card .p{ padding:12px 14px; color:var(--muted); font-size:.95rem; }
+  /* CONTACTO & FOOTER */
+  .contact{background:linear-gradient(180deg,#f9fbff,#ffffff)}
+  .contact-cta{text-align:center;margin-top:20px}
+  footer{margin-top:0;padding:36px 20px;background:var(--blue-900);color:#dbe6ff;text-align:center}
+  footer a{color:#fff;text-decoration:underline}
 
-  /* Contacto y footer */
-  .contact{ background:linear-gradient(180deg, #f9fbff, #ffffff); }
-  .contact-cta{ text-align:center; margin-top:20px; }
-  footer{ margin-top:0; padding:36px 20px; background:var(--blue-900); color:#dbe6ff; text-align:center; }
-  footer a{ color:#fff; text-decoration:underline; }
-
-  /* === Ajustes móviles/Tablet (overrides) === */
-  html { -webkit-text-size-adjust: 100%; }
-  body { overflow-x: hidden; }
-
-  .hero h1 { font-size: clamp(1.6rem, 5.2vw, 2.6rem); }
-  .hero p  { font-size: clamp(0.95rem, 3.6vw, 1.1rem); }
-
-  /* Evita distorsión en galería en móviles: relación 16:9 */
-  @media (max-width: 720px){
-    .card img {
-      height: auto !important;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      display: block;
-    }
-  }
-
-  section { padding: clamp(48px, 7vw, 70px) 20px; }
-
-  @media (max-width: 880px){
-    .menu{
-      left: 20px;
-      right: 20px;
-      width: auto;
-      max-width: calc(100% - 40px);
-    }
-  }
-
-  @media (max-width: 720px){
-    header.hero { min-height: 64vh; }
-    .arrow { padding: 8px 10px; }
-    .arrow.prev { left: 8px; } 
-    .arrow.next { right: 8px; }
-    .carousel-controls { gap: 6px; }
-    .dot { width: 8px; height: 8px; }
-  }
-
-  @media (max-width: 640px){
-    .services { gap: 14px; }
-    .grid { gap: 14px; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .hero-bg img{ transition:none !important; }
-  }
+  @media (prefers-reduced-motion:reduce){.hero-bg img{transition:none !important}}
 </style>
 </head>
 <body>
 
-<!-- ======= Navegación ======= -->
 <nav class="gs-topnav" role="navigation" aria-label="Menú principal">
   <div class="topnav-inner container">
     <a class="brand" href="#inicio">
-      <img src="./assets/img/logo.jpeg" alt="" onerror="this.style.display='none'">
+      <img id="brand-logo" src="./assets/img/logo/logo.jpg" alt="" onerror="this.style.display='none'">
       Multiservicios Jchuj
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">☰</button>
@@ -195,16 +117,11 @@
   </div>
 </nav>
 
-<!-- ======= Hero con carrusel ======= -->
 <header id="inicio" class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <!-- Las imágenes se inyectan vía JS desde la lista "IMAGES" -->
-  </div>
-
+  <div class="hero-bg" aria-hidden="true"></div>
   <button class="arrow prev" aria-label="Anterior">‹</button>
   <button class="arrow next" aria-label="Siguiente">›</button>
   <div class="carousel-controls" aria-hidden="true"></div>
-
   <div class="content container">
     <span class="tag">20 años de experiencia</span>
     <h1>Soluciones en construcción y mantenimiento</h1>
@@ -216,7 +133,6 @@
   </div>
 </header>
 
-<!-- ======= Quiénes somos / Misión / Visión ======= -->
 <section id="quienes" class="about">
   <div class="container">
     <h2 class="section-title">Quiénes Somos</h2>
@@ -236,90 +152,49 @@
         </div>
       </div>
       <div>
-        <h3 style="color:var(--blue-900); margin-bottom:8px;">Misión</h3>
-        <p class="mb">Proveer servicios integrales en estructuras metálicas, instalaciones y mantenimiento,
-          garantizando seguridad, calidad y continuidad operativa para nuestros clientes, mediante procesos
-          estandarizados, materiales certificados y un equipo técnico altamente capacitado.</p>
-
-        <h3 style="color:var(--blue-900); margin:18px 0 8px;">Visión</h3>
-        <p>Ser la empresa de referencia en soluciones constructivas y de mantenimiento en la región, reconocida
-          por su confiabilidad, innovación, cumplimiento y la excelencia de su talento humano.</p>
+        <h3 style="color:var(--blue-900);margin-bottom:8px;">Misión</h3>
+        <p>Proveer servicios integrales en estructuras metálicas, instalaciones y mantenimiento, garantizando seguridad, calidad y continuidad operativa para nuestros clientes, mediante procesos estandarizados, materiales certificados y un equipo técnico altamente capacitado.</p>
+        <h3 style="color:var(--blue-900);margin:18px 0 8px;">Visión</h3>
+        <p>Ser la empresa de referencia en soluciones constructivas y de mantenimiento en la región, reconocida por su confiabilidad, innovación, cumplimiento y la excelencia de su talento humano.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======= Servicios ======= -->
 <section id="servicios">
   <div class="container">
     <h2 class="section-title">Servicios</h2>
     <div class="services">
-      <article class="svc">
-        <h3>Estructuras Metálicas</h3>
-        <p>Diseño, fabricación y montaje de naves, cubiertas, mezzanines, barandales y soldadura especializada.</p>
-      </article>
-      <article class="svc">
-        <h3>Plomería</h3>
-        <p>Instalaciones hidráulicas y sanitarias, detección de fugas, bombas, calentadores y pruebas de presión.</p>
-      </article>
-      <article class="svc">
-        <h3>Instalaciones Eléctricas</h3>
-        <p>Residencial e industrial: tableros, canalizaciones, luminarias, puesta a tierra y normativas de seguridad.</p>
-      </article>
-      <article class="svc">
-        <h3>Obra Gris</h3>
-        <p>Construcción de muros, pisos, repellados, estructura ligera y acabados base para proyectos nuevos o remodelación.</p>
-      </article>
-      <article class="svc">
-        <h3>Mantenimiento General</h3>
-        <p>Programas preventivos y correctivos para instalaciones, equipos y edificaciones. Planes a medida.</p>
-      </article>
-      <article class="svc">
-        <h3>Armado Estructural para Edificios</h3>
-        <p>Prefabricado, izaje y montaje con control dimensional, logística y seguridad en sitio.</p>
-      </article>
+      <article class="svc"><h3>Estructuras Metálicas</h3><p>Diseño, fabricación y montaje de naves, cubiertas, mezzanines, barandales y soldadura especializada.</p></article>
+      <article class="svc"><h3>Plomería</h3><p>Instalaciones hidráulicas y sanitarias, detección de fugas, bombas, calentadores y pruebas de presión.</p></article>
+      <article class="svc"><h3>Instalaciones Eléctricas</h3><p>Residencial e industrial: tableros, canalizaciones, luminarias, puesta a tierra y normativas de seguridad.</p></article>
+      <article class="svc"><h3>Obra Gris</h3><p>Construcción de muros, pisos, repellados, estructura ligera y acabados base para proyectos nuevos o remodelación.</p></article>
+      <article class="svc"><h3>Mantenimiento General</h3><p>Programas preventivos y correctivos para instalaciones, equipos y edificaciones. Planes a medida.</p></article>
+      <article class="svc"><h3>Armado Estructural para Edificios</h3><p>Prefabricado, izaje y montaje con control dimensional, logística y seguridad en sitio.</p></article>
     </div>
   </div>
 </section>
 
-<!-- ======= Galería ======= -->
 <section id="galeria">
   <div class="container">
-    <h2 class="section-title">Galería de Trabajos</h2>
-    <div class="grid">
-      <article class="card">
-        <img src="./assets/img/trabajo1.jpeg" alt="Trabajo 1">
-        <div class="p">Trabajo 1</div>
-      </article>
-      <article class="card">
-        <img src="./assets/img/trabajo2.jpeg" alt="Trabajo 2">
-        <div class="p">Trabajo 2</div>
-      </article>
-      <article class="card">
-        <img src="./assets/img/trabajo3.jpeg" alt="Trabajo 3">
-        <div class="p">Trabajo 3</div>
-      </article>
-      <article class="card">
-        <img src="./assets/img/edificio1.jpeg" alt="Estructura en edificio 1">
-        <div class="p">Estructura en edificio 1</div>
-      </article>
-      <article class="card">
-        <img src="./assets/img/edificio2.jpeg" alt="Estructura en edificio 2">
-        <div class="p">Estructura en edificio 2</div>
-      </article>
-      <article class="card">
-        <img src="./assets/img/techo.jpeg" alt="Montaje de techo metálico">
-        <div class="p">Montaje de techo metálico</div>
-      </article>
+    <h2 class="section-title">Galería de Proyectos</h2>
+    <div id="projects-grid" class="projects-grid"></div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button class="lb-close" aria-label="Cerrar">✕</button>
+      <button class="lb-prev" aria-label="Anterior">‹</button>
+      <img id="lb-img" src="" alt="">
+      <button class="lb-next" aria-label="Siguiente">›</button>
+      <div class="lb-caption" id="lb-cap"></div>
     </div>
   </div>
 </section>
 
-<!-- ======= Contacto ======= -->
 <section id="contacto" class="contact">
   <div class="container">
     <h2 class="section-title">Contacto</h2>
-    <p style="text-align:center; color:var(--muted); max-width:780px; margin:0 auto;">
+    <p style="text-align:center;color:var(--muted);max-width:780px;margin:0 auto;">
       ¿Listo para cotizar o agendar una visita técnica? Escríbenos y con gusto te atendemos.
     </p>
     <div class="contact-cta">
@@ -337,14 +212,33 @@
   <a href="#inicio">Volver arriba</a>
 </footer>
 
-<!-- ========= Scripts ========= -->
 <script>
+/* ===== Utilidades y fallbacks ===== */
+function setSrcWithFallback(img, candidates){
+  let i = 0;
+  const tryNext = () => { if(i < candidates.length){ img.src = candidates[i++]; } };
+  img.addEventListener('error', tryNext, { once:false });
+  tryNext();
+}
+const EXT = [".jpg",".jpeg",".png",".webp"];
+
+/* Logo con fallback */
+(function(){
+  const logo = document.getElementById('brand-logo');
+  if(!logo) return;
+  const cand = [
+    "./assets/img/logo/logo.jpg",
+    "./assets/img/logo/logo.jpeg",
+    "./assets/img/logo.jpeg"
+  ].map(encodeURI);
+  setSrcWithFallback(logo, cand);
+})();
+
 /* ===== Menú móvil + enlace activo ===== */
 (function(){
   const toggle = document.querySelector('.nav-toggle');
   const menu = document.getElementById('primary-menu');
   const links = menu.querySelectorAll('a');
-
   toggle.addEventListener('click', ()=>{
     const open = menu.classList.toggle('open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -352,8 +246,6 @@
   links.forEach(a => a.addEventListener('click', ()=>{
     menu.classList.remove('open'); toggle.setAttribute('aria-expanded','false');
   }));
-
-  // Resaltar sección activa
   const sections = document.querySelectorAll('header#inicio, section[id]');
   const byHref = {}; links.forEach(a => { byHref[a.getAttribute('href')] = a; });
   const io = new IntersectionObserver((entries)=>{
@@ -367,45 +259,37 @@
   sections.forEach(sec => io.observe(sec));
 })();
 
-/* ===== Carrusel local (usa tus archivos de assets/img) ===== */
+/* ===== Carrusel (respeta tu estructura y nombres) ===== */
 (function(){
   const hero = document.querySelector('.hero-bg');
   if(!hero) return;
 
-  // Lista con todas tus fotos subidas (puedes reordenar o quitar)
-  const IMAGES = [
-    "trabajo1.jpeg","trabajo2.jpeg","trabajo3.jpeg","trabajo4.jpeg",
-    "trabajo5.jpeg","trabajo6.jpeg","trabajo7.jpeg","trabajo8.jpeg",
-    "edificio1.jpeg","edificio2.jpeg","edificio3.jpeg","edificio4.jpeg","edificio5.jpeg","edificio6.jpeg",
-    "furgon1.jpeg","furgon2.jpeg","techo.jpeg",
-    "cabaña1.jpeg","cabaña2.jpeg" // nombres con ñ funcionan gracias a encodeURI
-  ];
+  // Tus nombres: carrocel1..carrocel14; soporta carpetas "carousel" y "carrocel"
+  const NAMES = ["carrocel1","carrocel2","carrocel3","carrocel4","carrocel5","carrocel6","carrocel7","carrocel8","carrocel9","carrocel10","carrocel11","carrocel12","carrocel13","carrocel14"];
+  const DIRS = ["./assets/img/carousel/","./assets/img/carrocel/"];
 
-  // Construye las etiquetas <img> (codificando el nombre por si hay caracteres especiales)
-  hero.innerHTML = IMAGES.map((name, i)=>{
-    const src = "./assets/img/" + encodeURI(name);
-    return `<img src="${src}" alt="" ${i===0?'class="is-active"':''} decoding="async" ${i===0?'fetchpriority="high"':''}>`;
-  }).join("");
+  hero.innerHTML = NAMES.map((_,i)=>`<img ${i===0?'class="is-active"':''} decoding="async" ${i===0?'fetchpriority="high"':''} alt="">`).join("");
 
   const imgs = Array.from(hero.querySelectorAll('img'));
+  imgs.forEach((img, i)=>{
+    const candidates = [];
+    DIRS.forEach(d => EXT.forEach(e => candidates.push(encodeURI(d + NAMES[i] + e))));
+    setSrcWithFallback(img, candidates);
+  });
+
   const dotsWrap = document.querySelector('.carousel-controls');
   dotsWrap.innerHTML = imgs.map((_,i)=>`<span class="dot ${i===0?'is-active':''}" data-i="${i}"></span>`).join("");
   const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
 
   let index = 0, total = imgs.length, ms = 5000, timer = null;
-  const show = (i) => {
-    imgs.forEach((el,k)=>el.classList.toggle('is-active', k===i));
-    dots.forEach((d,k)=>d.classList.toggle('is-active', k===i));
-  };
+  const show = (i) => { imgs.forEach((el,k)=>el.classList.toggle('is-active', k===i)); dots.forEach((d,k)=>d.classList.toggle('is-active', k===i)); };
   const next = () => { index = (index+1)%total; show(index); };
   const prev = () => { index = (index-1+total)%total; show(index); };
 
-  // Controles
   document.querySelector('.arrow.next').addEventListener('click', ()=>{ next(); restart(); });
   document.querySelector('.arrow.prev').addEventListener('click', ()=>{ prev(); restart(); });
   dots.forEach(d => d.addEventListener('click', (e)=>{ index = +e.target.dataset.i; show(index); restart(); }));
 
-  // Auto-rotación (respeta reduce-motion)
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function start(){ if(!reduce) timer = setInterval(next, ms); }
   function stop(){ if(timer) clearInterval(timer); }
@@ -415,7 +299,77 @@
   hero.addEventListener('mouseleave', start);
   show(0); start();
 })();
+
+/* ===== Galería por proyectos + Lightbox (responsive, sin distorsión) ===== */
+(function(){
+  const grid = document.getElementById('projects-grid');
+  if(!grid) return;
+
+  const PROJECTS = [
+    { id: "proyecto-1", titulo: "Proyecto 1", fotos: ["proyecto1.1","proyecto1.2","proyecto1.3","proyecto1.4","proyecto1.5"] },
+    { id: "proyecto-2", titulo: "Proyecto 2", fotos: ["proyecto2.1","proyecto2.2","proyecto2.3","proyecto2.4","proyecto2.5","proyecto2.6","proyecto2.7","proyecto2.8"] },
+    { id: "proyecto-3", titulo: "Proyecto 3", fotos: ["proyecto3.1","proyecto3.2","proyecto3.3","proyecto3.4","proyecto3.5","proyecto3.6"] },
+    { id: "proyecto-4", titulo: "Proyecto 4", fotos: ["proyecto4.1","proyecto4.2","proyecto4.3"] },
+    { id: "proyecto-5", titulo: "Proyecto 5", fotos: ["proyecto5.1","proyecto5.2","proyecto5.3","proyecto5.4","proyecto5.5"] },
+    { id: "proyecto-6", titulo: "Proyecto 6", fotos: ["proyecto6.1","proyecto6.2","proyecto6.3","proyecto6.4","proyecto6.5"] }
+  ];
+  const EXT = [".jpg",".jpeg",".png",".webp"];
+
+  // Tarjetas
+  grid.innerHTML = PROJECTS.map((p, idx)=>{
+    const coverBase = `./assets/img/proyectos/${p.id}/${p.fotos[0]}`;
+    const cover = EXT.map(e => encodeURI(coverBase + e))[0]; // primer candidato
+    return `
+      <article class="project-card">
+        <img class="cover" src="${cover}" alt="">
+        <div class="meta">
+          <h3>${p.titulo}</h3>
+          <a href="#" class="btn btn--ghost" data-project="${idx}">Ver fotos</a>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  // Lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+  const btnOpen = grid.querySelectorAll('[data-project]');
+  const btnClose = lb.querySelector('.lb-close');
+  const btnPrev = lb.querySelector('.lb-prev');
+  const btnNext = lb.querySelector('.lb-next');
+
+  let pi = 0, fi = 0;
+
+  function buildCandidates(projectId, fotoBase){
+    const base = `./assets/img/proyectos/${projectId}/${fotoBase}`;
+    return EXT.map(e => encodeURI(base + e));
+  }
+  function load(){
+    const p = PROJECTS[pi];
+    setSrcWithFallback(lbImg, buildCandidates(p.id, p.fotos[fi]));
+    lbCap.textContent = `${p.titulo} — Foto ${fi+1} / ${p.fotos.length}`;
+  }
+  function open(projectIndex, fotoIndex=0){
+    pi = projectIndex; fi = fotoIndex; load();
+    lb.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden';
+  }
+  function close(){ lb.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+  function prev(){ fi = (fi - 1 + PROJECTS[pi].fotos.length) % PROJECTS[pi].fotos.length; load(); }
+  function next(){ fi = (fi + 1) % PROJECTS[pi].fotos.length; load(); }
+
+  btnOpen.forEach(a => a.addEventListener('click', (e)=>{ e.preventDefault(); open(+a.dataset.project, 0); }));
+  btnClose.addEventListener('click', close);
+  btnPrev.addEventListener('click', prev);
+  btnNext.addEventListener('click', next);
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) close(); });
+  window.addEventListener('keydown', (e)=>{
+    if(lb.getAttribute('aria-hidden') === 'true') return;
+    if(e.key === 'Escape') close();
+    if(e.key === 'ArrowLeft') prev();
+    if(e.key === 'ArrowRight') next();
+  });
+})();
 </script>
 </body>
 </html>
-
