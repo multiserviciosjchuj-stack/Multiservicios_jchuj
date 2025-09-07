@@ -6,9 +6,10 @@
 <title>Multiservicios Jchuj</title>
 <meta name="description" content="Estructuras metálicas, plomería, instalaciones eléctricas, obra gris, mantenimiento general y armado estructural. 20 años de experiencia.">
 <meta name="theme-color" content="#0f2a5a">
-<!-- Favicons (el navegador usará la que exista) -->
+<!-- Favicons: el navegador usará la que encuentre -->
 <link rel="icon" type="image/png"  href="./assets/img/logo/logo.png">
 <link rel="icon" type="image/jpeg" href="./assets/img/logo/logo.jpg">
+<link rel="icon" type="image/jpeg" href="./assets/img/logo/logo.jpeg">
 
 <style>
   :root{
@@ -122,7 +123,8 @@
 <nav class="gs-topnav" role="navigation" aria-label="Menú principal">
   <div class="topnav-inner container">
     <a class="brand" href="#inicio">
-      <img id="brand-logo" src="./assets/img/logo/logo.jpg" alt="" onerror="this.style.display='none'">
+      <!-- Sin src y sin onerror: el script asigna la ruta correcta -->
+      <img id="brand-logo" alt="Logo de Multiservicios Jchuj">
       Multiservicios Jchuj
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">☰</button>
@@ -241,25 +243,21 @@ function setSrcWithFallback(img, candidates){
 }
 const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
 
-/* ========= Logo: busca varias rutas/variantes ========= */
+/* ========= Logo: busca varias rutas/variantes (sin onerror que lo oculte) ========= */
 (function(){
   const logo = document.getElementById('brand-logo');
   if(!logo) return;
 
-  // Bases que probamos (dentro y fuera de la carpeta /logo/)
   const bases = [
     "./assets/img/logo/logo",
     "./assets/img/logo/Logo",
     "./assets/img/logo/LOGO",
-    "./assets/img/logo",     // por si subiste "logo.png" directamente
+    "./assets/img/logo",     // por si subiste "logo.jpeg" directamente dentro de /logo/
     "./assets/img/Logo",
-    "./assets/img/LOGO",
-    "./assets/img/logo"      // fallback histórico
+    "./assets/img/LOGO"
   ];
-
   const candidates = [];
   bases.forEach(b => EXT.forEach(e => candidates.push(encodeURI(`${b}${e}`))));
-
   setSrcWithFallback(logo, candidates);
 })();
 
