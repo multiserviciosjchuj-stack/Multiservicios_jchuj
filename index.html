@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Multiservicios Jchuj</title>
-<meta name="description" content="Estructuras metálicas, plomería, instalaciones eléctricas, obra gris, mantenimiento general y armado estructural para edificios. 20 años de experiencia.">
+<meta name="description" content="Estructuras metálicas, plomería, instalaciones eléctricas, obra gris, mantenimiento general y armado estructural. 20 años de experiencia.">
 <meta name="theme-color" content="#0f2a5a">
 <link rel="icon" href="./assets/img/logo.jpeg">
 <style>
@@ -213,14 +213,14 @@
 </footer>
 
 <script>
-/* ===== Utilidades y fallbacks ===== */
+/* ========= Utilidades ========= */
 function setSrcWithFallback(img, candidates){
   let i = 0;
   const tryNext = () => { if(i < candidates.length){ img.src = candidates[i++]; } };
   img.addEventListener('error', tryNext, { once:false });
   tryNext();
 }
-const EXT = [".jpg",".jpeg",".png",".webp"];
+const EXT = [".jpg",".jpeg",".png",".webp",".JPG",".JPEG",".PNG",".WEBP"];
 
 /* Logo con fallback */
 (function(){
@@ -234,7 +234,7 @@ const EXT = [".jpg",".jpeg",".png",".webp"];
   setSrcWithFallback(logo, cand);
 })();
 
-/* ===== Menú móvil + enlace activo ===== */
+/* ========= Menú móvil + sección activa ========= */
 (function(){
   const toggle = document.querySelector('.nav-toggle');
   const menu = document.getElementById('primary-menu');
@@ -259,18 +259,17 @@ const EXT = [".jpg",".jpeg",".png",".webp"];
   sections.forEach(sec => io.observe(sec));
 })();
 
-/* ===== Carrusel (respeta tu estructura y nombres) ===== */
+/* ========= Carrusel: soporta carpetas "carousel" y "carrocel" y nombres carrocel1..14 ========= */
 (function(){
   const hero = document.querySelector('.hero-bg');
   if(!hero) return;
 
-  // Tus nombres: carrocel1..carrocel14; soporta carpetas "carousel" y "carrocel"
   const NAMES = ["carrocel1","carrocel2","carrocel3","carrocel4","carrocel5","carrocel6","carrocel7","carrocel8","carrocel9","carrocel10","carrocel11","carrocel12","carrocel13","carrocel14"];
-  const DIRS = ["./assets/img/carousel/","./assets/img/carrocel/"];
+  const DIRS  = ["./assets/img/carousel/","./assets/img/carrocel/"];
 
   hero.innerHTML = NAMES.map((_,i)=>`<img ${i===0?'class="is-active"':''} decoding="async" ${i===0?'fetchpriority="high"':''} alt="">`).join("");
-
   const imgs = Array.from(hero.querySelectorAll('img'));
+
   imgs.forEach((img, i)=>{
     const candidates = [];
     DIRS.forEach(d => EXT.forEach(e => candidates.push(encodeURI(d + NAMES[i] + e))));
@@ -294,13 +293,12 @@ const EXT = [".jpg",".jpeg",".png",".webp"];
   function start(){ if(!reduce) timer = setInterval(next, ms); }
   function stop(){ if(timer) clearInterval(timer); }
   function restart(){ stop(); start(); }
-
   hero.addEventListener('mouseenter', stop);
   hero.addEventListener('mouseleave', start);
   show(0); start();
 })();
 
-/* ===== Galería por proyectos + Lightbox (responsive, sin distorsión) ===== */
+/* ========= Galería por proyectos + Lightbox (portadas con fallback de extensiones) ========= */
 (function(){
   const grid = document.getElementById('projects-grid');
   if(!grid) return;
@@ -313,52 +311,55 @@ const EXT = [".jpg",".jpeg",".png",".webp"];
     { id: "proyecto-5", titulo: "Proyecto 5", fotos: ["proyecto5.1","proyecto5.2","proyecto5.3","proyecto5.4","proyecto5.5"] },
     { id: "proyecto-6", titulo: "Proyecto 6", fotos: ["proyecto6.1","proyecto6.2","proyecto6.3","proyecto6.4","proyecto6.5"] }
   ];
-  const EXT = [".jpg",".jpeg",".png",".webp"];
 
-  // Tarjetas
-  grid.innerHTML = PROJECTS.map((p, idx)=>{
-    const coverBase = `./assets/img/proyectos/${p.id}/${p.fotos[0]}`;
-    const cover = EXT.map(e => encodeURI(coverBase + e))[0]; // primer candidato
-    return `
-      <article class="project-card">
-        <img class="cover" src="${cover}" alt="">
-        <div class="meta">
-          <h3>${p.titulo}</h3>
-          <a href="#" class="btn btn--ghost" data-project="${idx}">Ver fotos</a>
-        </div>
-      </article>
-    `;
-  }).join("");
+  grid.innerHTML = "";
+  PROJECTS.forEach((p, idx) => {
+    const card  = document.createElement("article");
+    card.className = "project-card";
+
+    // Portada con fallback
+    const cover = document.createElement("img");
+    cover.className = "cover";
+    const base = `./assets/img/proyectos/${p.id}/${p.fotos[0]}`;
+    const candidates = EXT.map(ext => encodeURI(base + ext));
+    setSrcWithFallback(cover, candidates);
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.innerHTML = `<h3>${p.titulo}</h3>
+                      <a href="#" class="btn btn--ghost" data-project="${idx}">Ver fotos</a>`;
+
+    card.appendChild(cover);
+    card.appendChild(meta);
+    grid.appendChild(card);
+  });
 
   // Lightbox
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lb-img');
-  const lbCap = document.getElementById('lb-cap');
-  const btnOpen = grid.querySelectorAll('[data-project]');
+  const lb     = document.getElementById('lightbox');
+  const lbImg  = document.getElementById('lb-img');
+  const lbCap  = document.getElementById('lb-cap');
+  const openers= grid.querySelectorAll('[data-project]');
   const btnClose = lb.querySelector('.lb-close');
-  const btnPrev = lb.querySelector('.lb-prev');
-  const btnNext = lb.querySelector('.lb-next');
+  const btnPrev  = lb.querySelector('.lb-prev');
+  const btnNext  = lb.querySelector('.lb-next');
 
   let pi = 0, fi = 0;
 
   function buildCandidates(projectId, fotoBase){
     const base = `./assets/img/proyectos/${projectId}/${fotoBase}`;
-    return EXT.map(e => encodeURI(base + e));
+    return EXT.map(ext => encodeURI(base + ext));
   }
   function load(){
     const p = PROJECTS[pi];
     setSrcWithFallback(lbImg, buildCandidates(p.id, p.fotos[fi]));
     lbCap.textContent = `${p.titulo} — Foto ${fi+1} / ${p.fotos.length}`;
   }
-  function open(projectIndex, fotoIndex=0){
-    pi = projectIndex; fi = fotoIndex; load();
-    lb.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden';
-  }
-  function close(){ lb.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+  function open(projectIndex, fotoIndex=0){ pi = projectIndex; fi = fotoIndex; load(); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function close(){ lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
   function prev(){ fi = (fi - 1 + PROJECTS[pi].fotos.length) % PROJECTS[pi].fotos.length; load(); }
   function next(){ fi = (fi + 1) % PROJECTS[pi].fotos.length; load(); }
 
-  btnOpen.forEach(a => a.addEventListener('click', (e)=>{ e.preventDefault(); open(+a.dataset.project, 0); }));
+  openers.forEach(a => a.addEventListener('click', e => { e.preventDefault(); open(+a.dataset.project, 0); }));
   btnClose.addEventListener('click', close);
   btnPrev.addEventListener('click', prev);
   btnNext.addEventListener('click', next);
@@ -373,3 +374,4 @@ const EXT = [".jpg",".jpeg",".png",".webp"];
 </script>
 </body>
 </html>
+
