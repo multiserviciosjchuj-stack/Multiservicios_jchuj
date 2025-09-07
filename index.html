@@ -6,7 +6,7 @@
 <title>Multiservicios Jchuj</title>
 <meta name="description" content="Estructuras metálicas, plomería, instalaciones eléctricas, obra gris, mantenimiento general y armado estructural. 20 años de experiencia.">
 <meta name="theme-color" content="#0f2a5a">
-<!-- Favicons: el navegador usará la que encuentre -->
+<!-- Favicons (usa la que exista) -->
 <link rel="icon" type="image/png"  href="./assets/img/logo/logo.png">
 <link rel="icon" type="image/jpeg" href="./assets/img/logo/logo.jpg">
 <link rel="icon" type="image/jpeg" href="./assets/img/logo/logo.jpeg">
@@ -18,15 +18,19 @@
     --radius:14px; --nav-h:64px; --safe-top: env(safe-area-inset-top, 0px);
   }
 
+  /* Resets + guardas contra overflow */
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  /* Bloquea cualquier desbordamiento horizontal residual */
-  html, body{ overflow-x: hidden; }
-  img, svg, video, canvas{ max-width:100%; height:auto; display:block; }
+  *::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  html,body{overflow-x:hidden;}
+  @supports (overflow: clip){ html,body{overflow-x:clip;} }
+  img,svg,video,canvas{max-width:100%;height:auto;display:block}
 
   body{font-family:system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
-  .container{max-width:1200px;margin:0 auto;padding:0 20px}
-  a{color:var(--blue-700);text-decoration:none} a:hover{text-decoration:underline}
+  .container{max-width:1200px;width:100%;margin:0 auto;padding-inline:20px}
+
+  a{color:var(--blue-700);text-decoration:none}
+  a:hover{text-decoration:underline}
   .btn{display:inline-block;padding:12px 20px;border-radius:12px;font-weight:600;border:2px solid var(--orange-500);color:#fff;background:var(--orange-500)}
   .btn--ghost{color:var(--orange-500);background:transparent}
   .tag{display:inline-block;font-size:.8rem;padding:6px 10px;border-radius:999px;background:var(--blue-100);color:var(--blue-700)}
@@ -42,7 +46,7 @@
   .nav-toggle{display:none;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);padding:8px 10px;border-radius:10px}
   @media (max-width:880px){
     .nav-toggle{display:block}
-    .menu{position:absolute;right:20px;top:calc(var(--nav-h) - 8px);display:none;flex-direction:column;gap:10px;background:rgba(15,42,90,.98);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;left:20px;width:auto;max-width:calc(100% - 40px)}
+    .menu{position:absolute;right:20px;top:calc(var(--nav-h) - 8px);display:none;flex-direction:column;gap:10px;background:rgba(15,42,90,.98);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;left:20px;max-width:calc(100% - 40px)}
     .menu.open{display:flex}
   }
 
@@ -60,7 +64,11 @@
   .dot.is-active{background:var(--orange-500)}
   .arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.35);color:#fff;padding:10px 12px;border-radius:999px;cursor:pointer;user-select:none}
   .arrow:hover{background:rgba(0,0,0,.5)} .arrow.prev{left:14px} .arrow.next{right:14px}
-  @media (max-width:720px){header.hero{min-height:64vh}.arrow{padding:8px 10px}.arrow.prev{left:8px}.arrow.next{right:8px}.carousel-controls{gap:6px}.dot{width:8px;height:8px}}
+  @media (max-width:720px){
+    header.hero{min-height:64vh}
+    .arrow{padding:8px 10px}.arrow.prev{left:8px}.arrow.next{right:8px}
+    .carousel-controls{gap:6px}.dot{width:8px;height:8px}
+  }
 
   /* SECCIONES */
   section{padding:clamp(48px,7vw,70px) 20px}
@@ -69,12 +77,14 @@
 
   /* QUIÉNES SOMOS */
   .about{background:#f8fafc}
+  .about .container{overflow-x:hidden} /* cierra cualquier desborde del grid en móvil */
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1000px;margin:0 auto}
-  .about p{color:var(--muted)}
-  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  /* evita que el min-content empuje el viewport en móvil */
+  .about-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .about p{color:var(--muted);overflow-wrap:anywhere;word-break:break-word}
+  .kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
   .kpi .card{background:#fff;border:1px solid #e5eef9;padding:16px;border-radius:var(--radius);text-align:center}
   .kpi .card b{font-size:1.8rem;color:var(--blue-700)}
-  @media (max-width:860px){.about-grid{grid-template-columns:1fr}}
 
   /* SERVICIOS */
   .services{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
@@ -106,28 +116,21 @@
 
   @media (prefers-reduced-motion:reduce){.hero-bg img{transition:none !important}}
 
-  /* ===== Anclas compensadas por el alto REAL del menú y el safe area ===== */
-  header#inicio, section[id]{
-    scroll-margin-top: calc(var(--nav-h) + var(--safe-top) + 20px);
-  }
+  /* ===== Anclas compensadas por el alto REAL del menú ===== */
+  header#inicio, section[id]{scroll-margin-top:calc(var(--nav-h) + var(--safe-top) + 20px)}
   @media (max-width:640px){
-    header#inicio, section[id]{
-      scroll-margin-top: calc(var(--nav-h) + var(--safe-top) + 32px);
-    }
+    header#inicio, section[id]{scroll-margin-top:calc(var(--nav-h) + var(--safe-top) + 32px)}
   }
 
-  /* ===== Centrados duros en móvil ===== */
-  @media (max-width: 640px){
-    .container { text-align: center; }
-    .about-grid{ grid-template-columns:1fr !important; text-align:center; }
-    .about-grid h3, .about-grid p{ text-align:center; }
-    .kpi{ gap:14px; justify-items:center; }
-    .project-card .meta{ justify-content:center; gap:10px; }
-    .project-card h3{ text-align:center; width:100%; }
-    .contact .container{ text-align:center; }
+  /* ===== Centrados duros en móvil solo para “Quiénes Somos” ===== */
+  @media (max-width:640px){
+    #quienes .container{ text-align:center; }
+    .about-grid{ grid-template-columns:1fr !important; }
+    .about-grid h3, .about-grid p{ text-align:center !important; }
+    .kpi{ justify-items:center; }
   }
-  @media (max-width: 380px){
-    h2.section-title{ font-size:1.8rem; }
+  @media (max-width:380px){
+    h2.section-title{font-size:1.8rem}
   }
 </style>
 </head>
@@ -136,7 +139,6 @@
 <nav class="gs-topnav" role="navigation" aria-label="Menú principal">
   <div class="topnav-inner container">
     <a class="brand" href="#inicio">
-      <!-- Sin src y sin onerror: el script asigna la ruta correcta -->
       <img id="brand-logo" alt="Logo de Multiservicios Jchuj">
       Multiservicios Jchuj
     </a>
@@ -247,7 +249,7 @@
 </footer>
 
 <script>
-/* ========= Utilidades ========= */
+/* Utilidad: fallback de rutas */
 function setSrcWithFallback(img, candidates){
   let i = 0;
   const tryNext = () => { if(i < candidates.length){ img.src = candidates[i++]; } };
@@ -256,7 +258,7 @@ function setSrcWithFallback(img, candidates){
 }
 const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
 
-/* ===== Ajusta dinámicamente la variable --nav-h al alto real del menú ===== */
+/* Ajusta dinámicamente --nav-h al alto real del menú */
 (function(){
   const nav = document.querySelector('.gs-topnav');
   if(!nav) return;
@@ -268,16 +270,15 @@ const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
   window.addEventListener('resize', setNavHeight);
 })();
 
-/* ========= Logo: busca varias rutas/variantes (sin onerror que lo oculte) ========= */
+/* Logo con múltiples posibles rutas/extensiones */
 (function(){
   const logo = document.getElementById('brand-logo');
   if(!logo) return;
-
   const bases = [
     "./assets/img/logo/logo",
     "./assets/img/logo/Logo",
     "./assets/img/logo/LOGO",
-    "./assets/img/logo",     // por si subiste "logo.jpeg" directamente dentro de /logo/
+    "./assets/img/logo",
     "./assets/img/Logo",
     "./assets/img/LOGO"
   ];
@@ -286,7 +287,7 @@ const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
   setSrcWithFallback(logo, candidates);
 })();
 
-/* ========= Menú móvil + sección activa ========= */
+/* Menú móvil + sección activa */
 (function(){
   const toggle = document.querySelector('.nav-toggle');
   const menu = document.getElementById('primary-menu');
@@ -311,7 +312,7 @@ const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
   sections.forEach(sec => io.observe(sec));
 })();
 
-/* ========= Carrusel: soporta carpetas "carousel" y "carrocel" y nombres carrocel1..14 ========= */
+/* Carrusel: acepta /carousel y /carrocel con nombres carrocel1..14 */
 (function(){
   const hero = document.querySelector('.hero-bg');
   if(!hero) return;
@@ -350,7 +351,7 @@ const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
   show(0); start();
 })();
 
-/* ========= Galería por proyectos + Lightbox (portadas con fallback) ========= */
+/* Galería por proyectos + Lightbox */
 (function(){
   const grid = document.getElementById('projects-grid');
   if(!grid) return;
@@ -369,7 +370,6 @@ const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
     const card  = document.createElement("article");
     card.className = "project-card";
 
-    // Portada con fallback
     const cover = document.createElement("img");
     cover.className = "cover";
     const base = `./assets/img/proyectos/${p.id}/${p.fotos[0]}`;
@@ -386,7 +386,6 @@ const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
     grid.appendChild(card);
   });
 
-  // Lightbox
   const lb     = document.getElementById('lightbox');
   const lbImg  = document.getElementById('lb-img');
   const lbCap  = document.getElementById('lb-cap');
