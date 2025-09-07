@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Multiservicios Jchuj</title>
 <meta name="description" content="Estructuras metálicas, plomería, instalaciones eléctricas, obra gris, mantenimiento general y armado estructural. 20 años de experiencia.">
 <meta name="theme-color" content="#0f2a5a">
-<link rel="icon" href="./assets/img/logo.jpeg">
+<!-- Favicons (el navegador usará la que exista) -->
+<link rel="icon" type="image/png"  href="./assets/img/logo/logo.png">
+<link rel="icon" type="image/jpeg" href="./assets/img/logo/logo.jpg">
+
 <style>
   :root{
     --blue-900:#0f2a5a; --blue-700:#1f4ea8; --blue-600:#1b5fbf; --blue-100:#e8f0fe;
@@ -236,18 +239,28 @@ function setSrcWithFallback(img, candidates){
   img.addEventListener('error', tryNext, { once:false });
   tryNext();
 }
-const EXT = [".jpg",".jpeg",".png",".webp",".JPG",".JPEG",".PNG",".WEBP"];
+const EXT = [".png",".jpg",".jpeg",".webp",".PNG",".JPG",".JPEG",".WEBP"];
 
-/* Logo con fallback */
+/* ========= Logo: busca varias rutas/variantes ========= */
 (function(){
   const logo = document.getElementById('brand-logo');
   if(!logo) return;
-  const cand = [
-    "./assets/img/logo/logo.jpg",
-    "./assets/img/logo/logo.jpeg",
-    "./assets/img/logo.jpeg"
-  ].map(encodeURI);
-  setSrcWithFallback(logo, cand);
+
+  // Bases que probamos (dentro y fuera de la carpeta /logo/)
+  const bases = [
+    "./assets/img/logo/logo",
+    "./assets/img/logo/Logo",
+    "./assets/img/logo/LOGO",
+    "./assets/img/logo",     // por si subiste "logo.png" directamente
+    "./assets/img/Logo",
+    "./assets/img/LOGO",
+    "./assets/img/logo"      // fallback histórico
+  ];
+
+  const candidates = [];
+  bases.forEach(b => EXT.forEach(e => candidates.push(encodeURI(`${b}${e}`))));
+
+  setSrcWithFallback(logo, candidates);
 })();
 
 /* ========= Menú móvil + sección activa ========= */
@@ -314,7 +327,7 @@ const EXT = [".jpg",".jpeg",".png",".webp",".JPG",".JPEG",".PNG",".WEBP"];
   show(0); start();
 })();
 
-/* ========= Galería por proyectos + Lightbox (portadas con fallback de extensiones) ========= */
+/* ========= Galería por proyectos + Lightbox (portadas con fallback) ========= */
 (function(){
   const grid = document.getElementById('projects-grid');
   if(!grid) return;
@@ -390,5 +403,4 @@ const EXT = [".jpg",".jpeg",".png",".webp",".JPG",".JPEG",".PNG",".WEBP"];
 </script>
 </body>
 </html>
-
 
