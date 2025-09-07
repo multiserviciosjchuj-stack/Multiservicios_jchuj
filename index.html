@@ -96,6 +96,22 @@
   footer a{color:#fff;text-decoration:underline}
 
   @media (prefers-reduced-motion:reduce){.hero-bg img{transition:none !important}}
+
+  /* ===== Pulido móvil: centrados y anclas con nav fijo ===== */
+  header#inicio, section[id]{ scroll-margin-top: calc(var(--nav-h) + 14px); }
+
+  @media (max-width: 640px){
+    .container { text-align: center; }
+    .about-grid{ grid-template-columns:1fr !important; text-align:center; }
+    .about-grid h3, .about-grid p{ text-align:center; }
+    .kpi{ gap:14px; }
+    .project-card .meta{ justify-content:center; gap:10px; }
+    .project-card h3{ text-align:center; width:100%; }
+    .contact .container{ text-align:center; }
+  }
+  @media (max-width: 380px){
+    h2.section-title{ font-size:1.8rem; }
+  }
 </style>
 </head>
 <body>
@@ -374,4 +390,5 @@ const EXT = [".jpg",".jpeg",".png",".webp",".JPG",".JPEG",".PNG",".WEBP"];
 </script>
 </body>
 </html>
+
 
